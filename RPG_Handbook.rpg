@@ -1,0 +1,54 @@
+/*-------------------------------
+/*    RPG Programming Guide     |
+/*   Author: Matthew Hoshauer   |
+/*-------------------------------
+
+/* Notable commentary
+/  - Primary programming language for IBM computers
+/*
+
+/* For more help -> https://www.ibm.com/support/pages/coding-rpg-iv-beginners-tutorial */
+
+/* Declaration -----------------------------------------------------
+
+ Use 'dcl-x' where x = C, S, DS, PR, or PI
+
+dcl-c = constant
+dcl-s = standalone variable. ordinary scalar variable. Name and Type
+dcl-ds = data structure. ends with end-ds statement.
+*/ 
+
+dcl-c MAX_ELEMS 100;
+dcl-c default_city_name 'London';
+
+dsply max_elems;
+dsply default_city_name
+return;
+
+/* For Loops -----------------------------------------------------------*/
+
+dcl-s num int(10); /* int(10) = integer has 10 digits (four byte int)*/
+
+for num = 1 to 3;
+    dsply ('i = ' + %char(num));  /* %char converts numeric val to readable character*/
+endfor;                           /* Also note: '+' works on strings AND numeric values*/
+return;
+
+/* Data Structures -----------------------------------------------------*/
+
+
+dcl-ds info qualified;
+           name char(10) inz('Sam');
+           salary packed(9 : 2) inz(50000.25);
+       end-ds;
+       dcl-ds otherInfo likeds(info) inz(*likeds);
+
+       dsply (info.name
+            + ' has a salary of'
+            + %char(info.salary));
+       otherInfo.name = 'Joe';
+       otherInfo.salary += 10000;
+       dsply (otherInfo.name
+            + ' has a salary of'
+            + %char(otherInfo.salary));
+       return;
