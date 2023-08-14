@@ -27,7 +27,7 @@ WITH DIFFERENTIAL; -- Differential back up = only back up changes since last sav
 CREATE TABLE Persons (          -- Format is -> Column Datatype,
     PersonID int,
     LastName varchar(255),      -- See Data Types at bottom 
-    FirstName varchar(255),
+    FirstName varchar(255) NOT NULL,
     Address varchar(255),
     City varchar(255)
 );
@@ -38,6 +38,83 @@ TRUNCATE TABLE Persons; -- Deletes data inside table only
 -- Altering
 
 ALTER TABLE table_name
+
+ALTER TABLE Persons
+ALTER COLUMN Age int NOT NULL;
+
+-- Constraints
+
+NOT NULL  -- Ensures that value must have something
+UNIQUE    -- Ensures all column values are DIFFERENT -- NOTE: Primary Key will auto have unique attribute
+PRIMARY KEY -- Uniquely identifies each record in the table
+FOREIGN KEY -- Relates a table to another table w primary key
+CHECK -- Checks a value for a column
+DEFAULT -- Sets a default value for a column
+AUTO_INCREMENT -- Often used with Primary Key field, starts with 1
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)  -- Value of primary key is made up of two columns here: ID and Lastname
+);
+
+-- To alter Primary Keys
+
+ALTER TABLE Persons
+ADD PRIMARY KEY (ID);
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+
+ALTER TABLE Persons
+DROP PRIMARY KEY;
+
+ALTER TABLE Persons
+DROP CONSTRAINT PK_Person;
+
+-- Foriegn Key: Used to prevent actions that would destroy links between tables. Refers to Primary Key in another table....
+
+-- Table with Primary key = Parent table, Foriegn key = Child table
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+-- Default Example / Auto Increment
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes',
+    OrderDate date DEFAULT GETDATE(),
+    PRIMARY KEY (ID)
+);
+
+CREATE TABLE Persons (
+    Personid int NOT NULL AUTO_INCREMENT,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (Personid)
+);
+
+
 
 ----------------------------------- GLOSSARY ----------------------------------------
 
